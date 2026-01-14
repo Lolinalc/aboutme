@@ -1,0 +1,24 @@
+/* App - Bloque principal */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Content */
+.app__content {
+  flex: 1;
+}
+
+/* App Footer */
+.app__footer {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  padding: var(--spacing-lg) 0;
+  text-align: center;
+  margin-top: var(--spacing-xxl);
+}
+
+.app__footer p {
+  font-size: var(--font-size-sm);
+}
