@@ -1,0 +1,12 @@
+[
+  {
+    "id": "d95386b7-a7c9-4135-b77b-1a31e2b20220",
+    "name": "Test",
+    "email": "test@test.com",
+    "phone": "",
+    "service": "",
+    "message": "Hola",
+    "createdAt": "2026-02-11T19:38:12.323Z",
+    "read": false
+  }
+]
