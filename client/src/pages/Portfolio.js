@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { placeholderProjects, categoryLabels } from '../data/projects';
 
-const API_URL = process.env.REACT_APP_API_URL || '';
-
 const categories = [
   { key: 'todos', label: 'Todos' },
   { key: 'web', label: 'Desarrollo Web' },
@@ -48,8 +46,7 @@ export default function Portfolio() {
   const { category: urlCategory } = useParams();
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState(urlCategory || 'todos');
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projects] = useState(placeholderProjects);
 
   // Sync URL param with filter
   useEffect(() => {
@@ -59,26 +56,6 @@ export default function Portfolio() {
   // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  // Fetch portfolio items
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`${API_URL}/api/portfolio`);
-        if (res.ok) {
-          const data = await res.json();
-          setProjects(data.length > 0 ? data : placeholderProjects);
-        } else {
-          setProjects(placeholderProjects);
-        }
-      } catch {
-        setProjects(placeholderProjects);
-      }
-      setLoading(false);
-    };
-    fetchProjects();
   }, []);
 
   const handleFilter = (key) => {
@@ -120,57 +97,51 @@ export default function Portfolio() {
       </div>
 
       {/* Grid */}
-      {loading ? (
-        <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--color-text-secondary)' }}>
-          Cargando portfolio...
-        </div>
-      ) : (
-        <div className="portfolio-grid">
-          {filtered.length === 0 ? (
-            <div className="portfolio-empty">
-              <div className="portfolio-empty-icon">📂</div>
-              <h3>Próximamente</h3>
-              <p>Estamos preparando proyectos increíbles para esta categoría. ¡Vuelve pronto!</p>
-            </div>
-          ) : (
-            filtered.map((project) => (
-              <div
-                key={project.id}
-                className="portfolio-card"
-                onClick={() => handleProjectClick(project)}
-              >
-                <div className="portfolio-card-image">
-                  {project.image ? (
-                    <img
-                      src={project.placeholder ? project.image : `${API_URL}${project.image}`}
-                      alt={project.title}
-                    />
-                  ) : (
-                    <PlaceholderImage category={project.category} title={project.title} />
-                  )}
-                  <div className="portfolio-card-overlay">
-                    <span>Ver detalle →</span>
-                  </div>
-                </div>
-                <div className="portfolio-card-body">
-                  <div className="portfolio-card-category">
-                    {categoryLabels[project.category] || project.category}
-                  </div>
-                  <h3 className="portfolio-card-title">{project.title}</h3>
-                  <p className="portfolio-card-desc">{project.description}</p>
-                  {project.tags && project.tags.length > 0 && (
-                    <div className="portfolio-tags">
-                      {project.tags.map((tag, i) => (
-                        <span key={i} className="portfolio-tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
+      <div className="portfolio-grid">
+        {filtered.length === 0 ? (
+          <div className="portfolio-empty">
+            <div className="portfolio-empty-icon">📂</div>
+            <h3>Próximamente</h3>
+            <p>Estamos preparando proyectos increíbles para esta categoría. ¡Vuelve pronto!</p>
+          </div>
+        ) : (
+          filtered.map((project) => (
+            <div
+              key={project.id}
+              className="portfolio-card"
+              onClick={() => handleProjectClick(project)}
+            >
+              <div className="portfolio-card-image">
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                  />
+                ) : (
+                  <PlaceholderImage category={project.category} title={project.title} />
+                )}
+                <div className="portfolio-card-overlay">
+                  <span>Ver detalle →</span>
                 </div>
               </div>
-            ))
-          )}
-        </div>
-      )}
+              <div className="portfolio-card-body">
+                <div className="portfolio-card-category">
+                  {categoryLabels[project.category] || project.category}
+                </div>
+                <h3 className="portfolio-card-title">{project.title}</h3>
+                <p className="portfolio-card-desc">{project.description}</p>
+                {project.tags && project.tags.length > 0 && (
+                  <div className="portfolio-tags">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className="portfolio-tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

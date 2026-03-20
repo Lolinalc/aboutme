@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { placeholderProjects, categoryLabels } from '../data/projects';
 
-const API_URL = process.env.REACT_APP_API_URL || '';
-
 // Gradientes placeholder por categoría
 function PlaceholderImage({ category, title }) {
   const gradients = {
@@ -42,12 +40,11 @@ function PlaceholderImage({ category, title }) {
 
 // Slot de imagen en la galería
 // isLocal=true cuando la imagen viene de un import de webpack (no del API)
-function ImageSlot({ src, alt, isLocal }) {
+function ImageSlot({ src, alt }) {
   if (src) {
-    const imgSrc = isLocal ? src : (src.startsWith('http') ? src : `${API_URL}${src}`);
     return (
       <div className="project-gallery-slot">
-        <img src={imgSrc} alt={alt} />
+        <img src={src} alt={alt} />
       </div>
     );
   }
@@ -109,7 +106,7 @@ export default function ProjectDetail() {
         <div className="project-detail-hero-image">
           {project.image ? (
             <img
-              src={project.placeholder ? project.image : `${API_URL}${project.image}`}
+              src={project.image}
               alt={project.title}
             />
           ) : (
