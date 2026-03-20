@@ -1,24 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CALENDAR_URL = "https://calendar.app.google/tc8tGgGg2iRSBWNh8";
 
 export default function Hero() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <section className="hero" id="inicio">
       <div className="hero-bg-shape" />
-      <div className="hero-label">Desarrollo Web &amp; Marketing Digital</div>
+      <div className="hero-label">{t('hero.label')}</div>
       <h1 className="hero-title">
-        Tu negocio merece
-        <br />
-        una presencia <em>digital</em> que venda.
+        {t('hero.title')}
       </h1>
       <p className="hero-subtitle">
-        Creamos sitios web estratégicos y campañas de marketing digital que
-        transforman visitantes en clientes. <br />
-        Tecnología + estrategia bajo un mismo techo.
+        {t('hero.subtitle')}
       </p>
 
       <div className="hero-actions">
@@ -28,7 +26,7 @@ export default function Hero() {
           target="_blank"
           rel="noreferrer"
         >
-          Agendar una cita
+          {t('hero.cta_calendar')}
           <svg
             width="16"
             height="16"
@@ -47,13 +45,13 @@ export default function Hero() {
           className="btn-secondary"
           onClick={() => navigate("/servicios")}
         >
-          Ver Servicios
+          {t('hero.cta_services')}
         </button>
       </div>
 
       <div className="hero-scroll-indicator">
         <div className="scroll-line" />
-        Explora
+        {t('hero.scroll')}
       </div>
     </section>
   );

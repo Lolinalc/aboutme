@@ -1,11 +1,9 @@
 import React from 'react';
-
-const items = [
-  'Diseño Web', 'Marketing Digital', 'Estrategia de Marca', 'SEO & Posicionamiento',
-  'Meta Ads', 'Redes Sociales', 'Landing Pages', 'Consultoría Digital'
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Marquee() {
+  const { t } = useTranslation();
+  const items = t('marquee.items', { returnObjects: true });
   const track = [...items, ...items];
 
   return (

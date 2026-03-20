@@ -166,6 +166,24 @@ nav.scrolled {
   display: block;
 }
 
+.lang-toggle {
+  background: transparent;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-toggle:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
 /* ============================================
    HERO
 ============================================ */
@@ -2626,6 +2644,29 @@ footer {
   align-items: center;
   gap: 4rem;
   flex-wrap: wrap;
+}
+
+/* Cards de servicios como link (homepage compacta) */
+a.service-card--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.service-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+  transition: gap 0.2s;
+}
+
+a.service-card--link:hover .service-card__cta {
+  gap: 0.7rem;
 }
 
 /* Cards clickeables en ServicesPage */

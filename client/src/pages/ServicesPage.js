@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useReveal } from '../hooks';
 import { servicesData, CALENDAR_URL } from '../data/services';
 
@@ -13,6 +14,8 @@ const ArrowIcon = () => (
 function ServiceCard({ service, delay }) {
   const [ref, isVisible] = useReveal();
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
 
   return (
     <div
@@ -23,11 +26,11 @@ function ServiceCard({ service, delay }) {
     >
       <div className="service-number">{service.number}</div>
       <div className="service-icon">{service.icon}</div>
-      <h3 className="service-title">{service.title}</h3>
-      <p className="service-desc">{service.desc}</p>
+      <h3 className="service-title">{service.title[lang]}</h3>
+      <p className="service-desc">{service.desc[lang]}</p>
 
       <ul className="service-features" style={{ marginBottom: 'auto' }}>
-        {service.features.map((f, i) => <li key={i}>{f}</li>)}
+        {service.features[lang].map((f, i) => <li key={i}>{f}</li>)}
       </ul>
 
       {/* Footer de la card: ver detalle */}
@@ -53,6 +56,7 @@ function ServiceCard({ service, delay }) {
 }
 
 export default function ServicesPage() {
+  const { t, i18n } = useTranslation();
   const [headerRef, headerVisible] = useReveal();
 
   useEffect(() => {
@@ -62,17 +66,17 @@ export default function ServicesPage() {
   return (
     <div className="portfolio-page" id="servicios">
       <div className="portfolio-hero">
-        <div className="section-label">Lo que hago</div>
+        <div className="section-label">{t('services.label')}</div>
         <h1 className="section-title" style={{ maxWidth: 700, margin: '0 auto' }}>
-          Soluciones digitales que impulsan resultados reales.
+          {t('services.title')}
         </h1>
         <p className="section-desc" style={{ maxWidth: 520, margin: '1rem auto 0' }}>
-          Haz clic en cualquier servicio para ver todos los detalles, qué incluye y ejemplos reales del portafolio.
+          {t('services.page_desc')}
         </p>
         <div style={{ marginTop: '2rem' }}>
           <a href={CALENDAR_URL} className="btn-primary" target="_blank" rel="noreferrer"
             style={{ display: 'inline-flex' }}>
-            Agendar una cita →
+            {t('services.book_btn')}
           </a>
         </div>
       </div>
@@ -88,10 +92,10 @@ export default function ServicesPage() {
       </div>
 
       <div className="project-detail-cta" style={{ marginTop: '3rem' }}>
-        <p>¿No sabes qué servicio necesitas? Platiquemos y te ayudo a encontrarlo.</p>
+        <p>{t('services.bottom_cta')}</p>
         <a href={CALENDAR_URL} className="btn-primary" target="_blank" rel="noreferrer"
           style={{ display: 'inline-flex' }}>
-          Agendar consulta gratuita →
+          {t('services.bottom_btn')}
         </a>
       </div>
     </div>

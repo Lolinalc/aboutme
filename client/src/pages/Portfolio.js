@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { placeholderProjects, categoryLabels } from '../data/projects';
-
-const categories = [
-  { key: 'todos', label: 'Todos' },
-  { key: 'web', label: 'Desarrollo Web' },
-  { key: 'marketing', label: 'Marketing Digital' },
-  { key: 'asesoria', label: 'Asesoría' },
-];
+import { useTranslation } from 'react-i18next';
+import { placeholderProjects } from '../data/projects';
 
 function PlaceholderImage({ category, title }) {
   const gradients = {
@@ -43,10 +37,19 @@ function PlaceholderImage({ category, title }) {
 }
 
 export default function Portfolio() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const { category: urlCategory } = useParams();
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState(urlCategory || 'todos');
   const [projects] = useState(placeholderProjects);
+
+  const categories = [
+    { key: 'todos', label: t('portfolio.filter_all') },
+    { key: 'web', label: t('portfolio.filter_web') },
+    { key: 'marketing', label: t('portfolio.filter_marketing') },
+    { key: 'asesoria', label: t('portfolio.filter_asesoria') },
+  ];
 
   // Sync URL param with filter
   useEffect(() => {
@@ -74,12 +77,12 @@ export default function Portfolio() {
   return (
     <div className="portfolio-page">
       <div className="portfolio-hero">
-        <div className="section-label">Nuestro Trabajo</div>
+        <div className="section-label">{t('portfolio.label')}</div>
         <h1 className="section-title" style={{ maxWidth: 700, margin: '0 auto' }}>
-          Proyectos que hablan por sí mismos.
+          {t('portfolio.title')}
         </h1>
         <p className="section-desc" style={{ maxWidth: 500, margin: '1rem auto 0' }}>
-          Cada proyecto refleja mi filosofía: diseño con propósito, estrategia con resultados.
+          {t('portfolio.desc')}
         </p>
       </div>
 
@@ -101,8 +104,8 @@ export default function Portfolio() {
         {filtered.length === 0 ? (
           <div className="portfolio-empty">
             <div className="portfolio-empty-icon">📂</div>
-            <h3>Próximamente</h3>
-            <p>Estamos preparando proyectos increíbles para esta categoría. ¡Vuelve pronto!</p>
+            <h3>{t('portfolio.empty_title')}</h3>
+            <p>{t('portfolio.empty_desc')}</p>
           </div>
         ) : (
           filtered.map((project) => (
@@ -121,18 +124,18 @@ export default function Portfolio() {
                   <PlaceholderImage category={project.category} title={project.title} />
                 )}
                 <div className="portfolio-card-overlay">
-                  <span>Ver detalle →</span>
+                  <span>{t('portfolio.card_cta')}</span>
                 </div>
               </div>
               <div className="portfolio-card-body">
                 <div className="portfolio-card-category">
-                  {categoryLabels[project.category] || project.category}
+                  {t(`portfolio.cat_${project.category}`)}
                 </div>
                 <h3 className="portfolio-card-title">{project.title}</h3>
-                <p className="portfolio-card-desc">{project.description}</p>
-                {project.tags && project.tags.length > 0 && (
+                <p className="portfolio-card-desc">{project.description[lang]}</p>
+                {project.tags && project.tags[lang] && project.tags[lang].length > 0 && (
                   <div className="portfolio-tags">
-                    {project.tags.map((tag, i) => (
+                    {project.tags[lang].map((tag, i) => (
                       <span key={i} className="portfolio-tag">{tag}</span>
                     ))}
                   </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useReveal } from "../hooks";
 import profileImg from "../assets/profile2.webp";
 import cvFile from "../assets/Lolina_Lopez_CV.pdf";
@@ -18,30 +19,31 @@ const techStack = [
   { label: "Figma", icon: "✏️" },
 ];
 
-const features = [
-  {
-    icon: "🎯",
-    title: "Enfoque en Resultados",
-    desc: "Cada proyecto está orientado a métricas reales: más ventas, más clientes, más visibilidad.",
-  },
-  {
-    icon: "🤝",
-    title: "Atención Personalizada",
-    desc: "Trabajo de cerca contigo para entender tu negocio y crear soluciones a tu medida.",
-  },
-  {
-    icon: "⚡",
-    title: "Todo en Uno",
-    desc: "Web + Marketing bajo un mismo techo. Sin coordinar múltiples proveedores.",
-  },
-  {
-    icon: "🌮",
-    title: "100% Local",
-    desc: "Basada en Mérida, Yucatán. Conozco el mercado local y sus oportunidades.",
-  },
-];
-
 export default function About() {
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      icon: "🎯",
+      title: t('about.diff1_title'),
+      desc: t('about.diff1_desc'),
+    },
+    {
+      icon: "🤝",
+      title: t('about.diff2_title'),
+      desc: t('about.diff2_desc'),
+    },
+    {
+      icon: "⚡",
+      title: t('about.diff3_title'),
+      desc: t('about.diff3_desc'),
+    },
+    {
+      icon: "🌮",
+      title: t('about.diff4_title'),
+      desc: t('about.diff4_desc'),
+    },
+  ];
   const [topLeftRef, topLeftVisible] = useReveal();
   const [topRightRef, topRightVisible] = useReveal();
   const [bottomRef, bottomVisible] = useReveal();
@@ -55,25 +57,16 @@ export default function About() {
           ref={topLeftRef}
           className={`reveal${topLeftVisible ? " visible" : ""}`}
         >
-          <div className="section-label">Sobre mí</div>
-          <h2 className="section-title">Marketing + Código</h2>
+          <div className="section-label">{t('about.label')}</div>
+          <h2 className="section-title">{t('about.title')}</h2>
           <p className="about-text">
-            {/* ── EDITA AQUÍ TU BIOGRAFÍA ── */}
-            Hola, soy Lolina — desarrolladora Full Stack Junior con más de 11
-            años de experiencia en marketing digital. Combino mis conocimientos
-            técnicos en frontend y backend con una sólida base en estrategia de
-            negocios, lo que me permite crear productos digitales que no solo
-            funcionan bien, sino que están pensados para vender, posicionarse y
-            crecer.
+            {t('about.bio1')}
             <br />
             <br />
-            Trabajo principalmente con startups, emprendedores y pequeñas
-            empresas que quieren dar el siguiente paso en su presencia digital.
-            Si tienes un proyecto en mente, me encantaría escucharte.
+            {t('about.bio2')}
           </p>
           <div className="about-highlight">
-            "Entiendo tanto el código como la estrategia. Cada pixel tiene un
-            propósito, cada campaña tiene un objetivo medible."
+            "{t('about.quote')}"
           </div>
 
           {/* Botones */}
@@ -97,7 +90,7 @@ export default function About() {
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Descargar CV
+              {t('about.cv')}
             </a>
             <a
               href={CALENDAR_URL}
@@ -105,7 +98,7 @@ export default function About() {
               target="_blank"
               rel="noreferrer"
             >
-              Agenda una reunión
+              {t('about.meeting')}
               <svg
                 width="14"
                 height="14"
@@ -141,7 +134,7 @@ export default function About() {
 
           {/* Tech Stack */}
           <div className="about-tech">
-            <div className="about-tech-label">Tecnologías y herramientas</div>
+            <div className="about-tech-label">{t('about.tech_label')}</div>
             <div className="about-tech-grid">
               {techStack.map((tech) => (
                 <div key={tech.label} className="about-tech-item">

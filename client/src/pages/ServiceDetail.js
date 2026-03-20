@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useReveal } from '../hooks';
 import { servicesData, CALENDAR_URL } from '../data/services';
 
 export default function ServiceDetail() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const { serviceId } = useParams();
   const navigate = useNavigate();
   const [bodyRef, bodyVisible] = useReveal();
@@ -22,10 +25,10 @@ export default function ServiceDetail() {
       <div className="portfolio-page" style={{ textAlign: 'center', paddingTop: '10rem' }}>
         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
         <h2 style={{ fontFamily: "'Playfair Display', serif", marginBottom: '1.5rem' }}>
-          Servicio no encontrado
+          {t('services.not_found')}
         </h2>
         <Link to="/servicios" className="btn-primary" style={{ display: 'inline-flex' }}>
-          ← Ver todos los servicios
+          {t('services.back')}
         </Link>
       </div>
     );
@@ -41,7 +44,7 @@ export default function ServiceDetail() {
             <line x1="19" y1="12" x2="5" y2="12" />
             <polyline points="12 19 5 12 12 5" />
           </svg>
-          Ver todos los servicios
+          {t('services.other_services')}
         </button>
       </div>
 
@@ -49,12 +52,12 @@ export default function ServiceDetail() {
       <div className="service-detail-hero">
         <div className="service-detail-icon">{service.icon}</div>
         <div className="section-label">{service.number}</div>
-        <h1 className="service-detail-title">{service.title}</h1>
-        <p className="service-detail-subtitle">{service.desc}</p>
+        <h1 className="service-detail-title">{service.title[lang]}</h1>
+        <p className="service-detail-subtitle">{service.desc[lang]}</p>
         <div className="service-detail-hero-actions">
           <a href={CALENDAR_URL} className="btn-primary" target="_blank" rel="noreferrer"
             style={{ display: 'inline-flex' }}>
-            {service.calendarCta} →
+            {service.calendarCta[lang]} →
           </a>
           <Link to={`/portfolio/${service.portfolioCategory}`}
             className="btn-secondary" style={{ display: 'inline-flex' }}>
@@ -66,15 +69,15 @@ export default function ServiceDetail() {
       {/* ── Descripción larga ──────────────────────────────── */}
       <div ref={bodyRef} className={`service-detail-body reveal${bodyVisible ? ' visible' : ''}`}>
         <div className="service-detail-desc-block">
-          <div className="section-label">Sobre este servicio</div>
-          <p className="service-detail-long-desc">{service.longDesc}</p>
+          <div className="section-label">{t('services.about_label')}</div>
+          <p className="service-detail-long-desc">{service.longDesc[lang]}</p>
         </div>
 
         {/* Qué incluye */}
         <div ref={includesRef} className={`reveal${includesVisible ? ' visible' : ''}`}>
-          <div className="section-label" style={{ marginBottom: '1.5rem' }}>Qué incluye</div>
+          <div className="section-label" style={{ marginBottom: '1.5rem' }}>{t('services.includes_label')}</div>
           <div className="service-includes-grid">
-            {service.includes.map((item, i) => (
+            {service.includes[lang].map((item, i) => (
               <div key={i} className="service-include-card">
                 <div className="service-include-icon">{item.icon}</div>
                 <div>
@@ -89,12 +92,12 @@ export default function ServiceDetail() {
 
       {/* ── Ideal para ────────────────────────────────────── */}
       <div ref={idealRef} className={`service-ideal-section reveal${idealVisible ? ' visible' : ''}`}>
-        <div className="section-label" style={{ marginBottom: '0.75rem' }}>Ideal para</div>
+        <div className="section-label" style={{ marginBottom: '0.75rem' }}>{t('services.ideal_label')}</div>
         <h2 className="section-title" style={{ marginBottom: '2rem', maxWidth: 500 }}>
-          ¿Es este servicio para ti?
+          {t('services.ideal_title')}
         </h2>
         <ul className="service-ideal-list">
-          {service.idealFor.map((item, i) => (
+          {service.idealFor[lang].map((item, i) => (
             <li key={i} className="service-ideal-item">
               <span className="service-ideal-check">✓</span>
               {item}
@@ -103,7 +106,7 @@ export default function ServiceDetail() {
         </ul>
         <a href={CALENDAR_URL} className="btn-primary" target="_blank" rel="noreferrer"
           style={{ display: 'inline-flex', marginTop: '2.5rem' }}>
-          {service.calendarCta} →
+          {service.calendarCta[lang]} →
         </a>
       </div>
 
@@ -111,12 +114,12 @@ export default function ServiceDetail() {
       <div ref={portfolioRef} className={`service-portfolio-section reveal${portfolioVisible ? ' visible' : ''}`}>
         <div className="service-portfolio-inner">
           <div style={{ flex: 1 }}>
-            <div className="section-label">Ejemplos reales</div>
+            <div className="section-label">{t('services.portfolio_label')}</div>
             <h2 className="section-title" style={{ maxWidth: 420, marginTop: '0.5rem' }}>
-              Mira lo que he logrado para otros clientes.
+              {t('services.portfolio_desc')}
             </h2>
             <p style={{ color: 'var(--color-text-secondary)', marginTop: '1rem', lineHeight: 1.7, maxWidth: 380 }}>
-              Cada proyecto en mi portafolio es un caso real con objetivos, proceso y resultados concretos.
+              {t('services.portfolio_detail')}
             </p>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
@@ -125,14 +128,14 @@ export default function ServiceDetail() {
               className="btn-primary"
               style={{ display: 'inline-flex' }}
             >
-              Ver portafolio de {service.title} →
+              {t('services.portfolio_link', { name: service.title })}
             </Link>
             <Link
               to="/portfolio"
               className="btn-secondary"
               style={{ display: 'inline-flex' }}
             >
-              Ver todo el portafolio
+              {t('services.view_all')}
             </Link>
           </div>
         </div>
@@ -140,14 +143,14 @@ export default function ServiceDetail() {
 
       {/* ── CTA final ─────────────────────────────────────── */}
       <div className="project-detail-cta">
-        <p>¿Listo para dar el siguiente paso?</p>
+        <p>{t('services.next_step')}</p>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <a href={CALENDAR_URL} className="btn-primary" target="_blank" rel="noreferrer"
             style={{ display: 'inline-flex' }}>
-            {service.calendarCta} →
+            {service.calendarCta[lang]} →
           </a>
           <Link to="/servicios" className="btn-secondary" style={{ display: 'inline-flex' }}>
-            ← Ver otros servicios
+            {t('services.other_services')}
           </Link>
         </div>
       </div>

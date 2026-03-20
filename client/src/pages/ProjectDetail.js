@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { placeholderProjects, categoryLabels } from '../data/projects';
+import { useTranslation } from 'react-i18next';
+import { placeholderProjects } from '../data/projects';
 
 // Gradientes placeholder por categoría
 function PlaceholderImage({ category, title }) {
@@ -57,6 +58,8 @@ function ImageSlot({ src, alt }) {
 }
 
 export default function ProjectDetail() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const { projectId } = useParams();
   const navigate = useNavigate();
 
@@ -73,10 +76,10 @@ export default function ProjectDetail() {
         <div style={{ textAlign: 'center', padding: '8rem 2rem' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
           <h2 style={{ fontFamily: "'Playfair Display', serif", marginBottom: '1rem' }}>
-            Proyecto no encontrado
+            {t('portfolio.not_found')}
           </h2>
           <Link to="/portfolio" className="btn-primary" style={{ display: 'inline-flex' }}>
-            ← Volver al portafolio
+            {t('portfolio.back_link')}
           </Link>
         </div>
       </div>
@@ -97,7 +100,7 @@ export default function ProjectDetail() {
             <line x1="19" y1="12" x2="5" y2="12" />
             <polyline points="12 19 5 12 12 5" />
           </svg>
-          Volver al portafolio
+          {t('portfolio.back')}
         </button>
       </div>
 
@@ -120,51 +123,51 @@ export default function ProjectDetail() {
         {/* Columna de información */}
         <div className="project-detail-body">
           <div className="section-label">
-            {categoryLabels[project.category] || project.category}
+            {t(`portfolio.cat_${project.category}`)}
           </div>
           <h1 className="project-detail-title">{project.title}</h1>
 
           {project.client && (
             <p className="project-detail-meta">
-              <span>Cliente</span>
+              <span>{t('portfolio.meta_client')}</span>
               <strong>{project.client}</strong>
             </p>
           )}
           {project.date && (
             <p className="project-detail-meta">
-              <span>📅 Fecha</span>
-              <strong>{project.date}</strong>
+              <span>{t('portfolio.meta_date')}</span>
+              <strong>{project.date && typeof project.date === 'object' ? project.date[lang] : project.date}</strong>
             </p>
           )}
           {project.location && (
             <p className="project-detail-meta">
-              <span>📍 Ubicación</span>
+              <span>{t('portfolio.meta_location')}</span>
               <strong>{project.location}</strong>
             </p>
           )}
 
-          <p className="project-detail-desc">{project.description}</p>
+          <p className="project-detail-desc">{project.description[lang]}</p>
 
           {/* Campañas y resultados */}
           {project.campaigns && project.campaigns.length > 0 && (
             <div className="project-campaigns">
-              <h3 className="project-campaigns-title">Campañas y Resultados</h3>
+              <h3 className="project-campaigns-title">{t('portfolio.campaigns_title')}</h3>
               {project.campaigns.map((camp, i) => (
                 <div key={i} className="project-campaign-item">
                   <div className="project-campaign-header">
-                    <strong>{camp.name}</strong>
-                    <span className="project-campaign-duration">{camp.duration}</span>
+                    <strong>{camp.name[lang]}</strong>
+                    <span className="project-campaign-duration">{camp.duration[lang]}</span>
                   </div>
-                  <p className="project-campaign-result">✓ {camp.result}</p>
+                  <p className="project-campaign-result">✓ {camp.result[lang]}</p>
                 </div>
               ))}
             </div>
           )}
 
           {/* Tags */}
-          {project.tags && project.tags.length > 0 && (
+          {project.tags && project.tags[lang] && project.tags[lang].length > 0 && (
             <div className="portfolio-tags" style={{ marginTop: '1.5rem' }}>
-              {project.tags.map((tag, i) => (
+              {project.tags[lang].map((tag, i) => (
                 <span key={i} className="portfolio-tag">{tag}</span>
               ))}
             </div>
@@ -174,7 +177,7 @@ export default function ProjectDetail() {
           <div className="project-detail-actions">
             {project.url && (
               <a href={project.url} target="_blank" rel="noreferrer" className="btn-primary" style={{ display: 'inline-flex' }}>
-                Ver sitio en vivo →
+                {t('portfolio.live_site')}
               </a>
             )}
             {project.github && (
@@ -185,7 +188,7 @@ export default function ProjectDetail() {
                 className="btn-primary"
                 style={{ display: 'inline-flex', background: 'var(--color-text-dark)' }}
               >
-                Ver en GitHub →
+                {t('portfolio.view_github')}
               </a>
             )}
           </div>
@@ -218,9 +221,9 @@ export default function ProjectDetail() {
 
       {/* ── CTA final ── */}
       <div className="project-detail-cta">
-        <p>¿Te gustó este trabajo? Podemos hacer algo increíble juntos.</p>
+        <p>{t('portfolio.final_cta')}</p>
         <Link to="/portfolio" className="btn-secondary" style={{ display: 'inline-flex' }}>
-          ← Ver más proyectos
+          {t('portfolio.more_projects')}
         </Link>
         <a
           href="https://calendar.app.google/tc8tGgGg2iRSBWNh8"
@@ -229,7 +232,7 @@ export default function ProjectDetail() {
           rel="noreferrer"
           style={{ display: 'inline-flex' }}
         >
-          Agendar una cita →
+          {t('portfolio.book_cta')}
         </a>
       </div>
     </div>

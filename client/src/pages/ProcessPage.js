@@ -1,30 +1,8 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useReveal } from '../hooks';
 
 const CALENDAR_URL = 'https://calendar.app.google/tc8tGgGg2iRSBWNh8';
-
-const steps = [
-  {
-    num: '01',
-    title: 'Reunión inicial',
-    desc: 'Agendamos una reunión para entender tu negocio, objetivos y retos. Sin compromiso, con claridad.',
-  },
-  {
-    num: '02',
-    title: 'Propuesta de solución',
-    desc: 'Preparo una propuesta clara con etapas, entregables y presupuesto. Todo por escrito, sin sorpresas.',
-  },
-  {
-    num: '03',
-    title: 'Ejecución',
-    desc: 'Implementamos el plan con comunicación constante. Tú revisas y apruebas en cada etapa.',
-  },
-  {
-    num: '04',
-    title: 'Medición y ajustes',
-    desc: 'Analizamos resultados y ajustamos la estrategia para maximizar el retorno de tu inversión.',
-  },
-];
 
 function StepCard({ step, delay }) {
   const [ref, isVisible] = useReveal();
@@ -42,8 +20,51 @@ function StepCard({ step, delay }) {
 }
 
 export default function ProcessPage() {
+  const { t } = useTranslation();
   const [headerRef, headerVisible] = useReveal();
   const [ctaRef, ctaVisible] = useReveal();
+
+  const steps = [
+    {
+      num: '01',
+      title: t('process.step1_title'),
+      desc: t('process.step1_desc'),
+    },
+    {
+      num: '02',
+      title: t('process.step2_title'),
+      desc: t('process.step2_desc'),
+    },
+    {
+      num: '03',
+      title: t('process.step3_title'),
+      desc: t('process.step3_desc'),
+    },
+    {
+      num: '04',
+      title: t('process.step4_title'),
+      desc: t('process.step4_desc'),
+    },
+  ];
+
+  const faqItems = [
+    {
+      q: t('process.faq1_q'),
+      a: t('process.faq1_a'),
+    },
+    {
+      q: t('process.faq2_q'),
+      a: t('process.faq2_a'),
+    },
+    {
+      q: t('process.faq3_q'),
+      a: t('process.faq3_a'),
+    },
+    {
+      q: t('process.faq4_q'),
+      a: t('process.faq4_a'),
+    },
+  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,12 +74,12 @@ export default function ProcessPage() {
     <div className="portfolio-page" id="proceso">
       {/* Hero de página */}
       <div className="portfolio-hero">
-        <div className="section-label">Cómo trabajamos</div>
+        <div className="section-label">{t('process.label')}</div>
         <h1 className="section-title" style={{ maxWidth: 700, margin: '0 auto' }}>
-          Un proceso claro, sin sorpresas.
+          {t('process.title')}
         </h1>
         <p className="section-desc" style={{ maxWidth: 520, margin: '1rem auto 0' }}>
-          Cada proyecto sigue una metodología probada para asegurar resultados predecibles y entregas a tiempo.
+          {t('process.desc')}
         </p>
       </div>
 
@@ -74,29 +95,12 @@ export default function ProcessPage() {
 
       {/* Bloque de preguntas frecuentes sobre el proceso */}
       <div className="process-page-faq">
-        <div className="section-label" style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Preguntas frecuentes</div>
+        <div className="section-label" style={{ textAlign: 'center', marginBottom: '0.5rem' }}>{t('process.faq_label')}</div>
         <h2 className="section-title" style={{ textAlign: 'center', margin: '0 auto 3rem', maxWidth: 550 }}>
-          ¿Cómo funciona trabajar conmigo?
+          {t('process.faq_title')}
         </h2>
         <div className="process-faq-grid">
-          {[
-            {
-              q: '¿Cuánto tiempo tarda un proyecto?',
-              a: 'Depende del alcance. Una landing page puede estar lista en 1–2 semanas; un sitio completo, en 3–6 semanas. Lo definimos en la propuesta.',
-            },
-            {
-              q: '¿Cómo me mantienes informada/o?',
-              a: 'Trabajamos con revisiones por etapas. En cada fase recibes avances para aprobar antes de continuar. Sin código entregado de golpe.',
-            },
-            {
-              q: '¿Qué necesito para empezar?',
-              a: 'Solo platicar. No necesitas tener todo claro. En la reunión inicial ordenamos las ideas y definimos los pasos juntos.',
-            },
-            {
-              q: '¿Qué pasa después de entregar el proyecto?',
-              a: 'Doy soporte post-lanzamiento y puedo continuar con mantenimiento o campañas según tu plan. No desaparezco después de entregar.',
-            },
-          ].map((item, i) => (
+          {faqItems.map((item, i) => (
             <div key={i} className="process-faq-item">
               <h4 className="process-faq-q">{item.q}</h4>
               <p className="process-faq-a">{item.a}</p>
@@ -107,7 +111,7 @@ export default function ProcessPage() {
 
       {/* CTA final */}
       <div ref={ctaRef} className={`project-detail-cta reveal${ctaVisible ? ' visible' : ''}`}>
-        <p>¿Listo para empezar? El primer paso es una conversación.</p>
+        <p>{t('process.final_cta_text')}</p>
         <a
           href={CALENDAR_URL}
           className="btn-primary"
@@ -115,7 +119,7 @@ export default function ProcessPage() {
           rel="noreferrer"
           style={{ display: 'inline-flex' }}
         >
-          Agendar reunión inicial →
+          {t('process.final_cta_btn')}
         </a>
       </div>
     </div>

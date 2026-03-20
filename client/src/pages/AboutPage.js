@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useReveal } from "../hooks";
 import profileImg from "../assets/profile2.webp";
 import cvFile from "../assets/Lolina_Lopez_CV.pdf";
@@ -18,30 +19,31 @@ const techStack = [
   { label: "SEO", icon: "📊" },
 ];
 
-const features = [
-  {
-    icon: "🎯",
-    title: "Enfoque en Resultados",
-    desc: "Cada proyecto está orientado a métricas reales: más ventas, más clientes, más visibilidad.",
-  },
-  {
-    icon: "🤝",
-    title: "Atención Personalizada",
-    desc: "Trabajo de cerca contigo para entender tu negocio y crear soluciones a tu medida.",
-  },
-  {
-    icon: "⚡",
-    title: "Todo en Uno",
-    desc: "Web + Marketing bajo un mismo techo. Sin coordinar múltiples proveedores.",
-  },
-  {
-    icon: "🌮",
-    title: "100% Local",
-    desc: "Basada en Mérida, Yucatán. Conozco el mercado local y sus oportunidades.",
-  },
-];
-
 export default function AboutPage() {
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      icon: "🎯",
+      title: t('about.diff1_title'),
+      desc: t('about.diff1_desc'),
+    },
+    {
+      icon: "🤝",
+      title: t('about.diff2_title'),
+      desc: t('about.diff2_desc'),
+    },
+    {
+      icon: "⚡",
+      title: t('about.diff3_title'),
+      desc: t('about.diff3_desc'),
+    },
+    {
+      icon: "🌮",
+      title: t('about.diff4_title'),
+      desc: t('about.diff4_desc'),
+    },
+  ];
   const [topLeftRef, topLeftVisible] = useReveal();
   const [topRightRef, topRightVisible] = useReveal();
   const [bottomRef, bottomVisible] = useReveal();
@@ -54,18 +56,18 @@ export default function AboutPage() {
     <div className="portfolio-page" id="sobre-mi">
       {/* ── Hero de página ───────────────────────────────── */}
       <div className="portfolio-hero">
-        <div className="section-label">Sobre mí</div>
+        <div className="section-label">{t('about.label')}</div>
         <h1
           className="section-title"
           style={{ maxWidth: 700, margin: "0 auto" }}
         >
-          Marketing + Código
+          {t('about.title')}
         </h1>
         <p
           className="section-desc"
           style={{ maxWidth: 520, margin: "1rem auto 0" }}
         >
-          La combinación que tu negocio necesita.
+          {t('about.subtitle')}
         </p>
       </div>
 
@@ -77,23 +79,14 @@ export default function AboutPage() {
           className={`about-page-left reveal${topLeftVisible ? " visible" : ""}`}
         >
           <p className="about-page-bio">
-            {/* ── EDITA AQUÍ TU BIOGRAFÍA ── */}
-            Hola, soy Lolina López, desarrolladora Full Stack con más de 11 años
-            de experiencia en marketing digital. Combino mis conocimientos
-            técnicos en frontend y backend con una sólida base en estrategia de
-            negocios, lo que me permite crear productos digitales que no solo
-            funcionan bien, sino que están pensados para vender, posicionarse y
-            crecer.
+            {t('about.bio1')}
           </p>
           <p className="about-page-bio" style={{ marginTop: "1.5rem" }}>
-            Trabajo principalmente con startups, emprendedores y pequeñas
-            empresas que quieren dar el siguiente paso en su presencia digital.
-            Si tienes un proyecto en mente, me encantaría escucharte.
+            {t('about.bio2')}
           </p>
 
           <div className="about-highlight" style={{ marginTop: "2rem" }}>
-            "Entiendo tanto el código como la estrategia. Cada pixel tiene un
-            propósito, cada campaña tiene un objetivo medible."
+            "{t('about.quote')}"
           </div>
 
           {/* Botones */}
@@ -122,7 +115,7 @@ export default function AboutPage() {
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Descargar CV
+              {t('about.cv')}
             </a>
             <a
               href={CALENDAR_URL}
@@ -135,7 +128,7 @@ export default function AboutPage() {
                 gap: "0.6rem",
               }}
             >
-              Agenda una reunión
+              {t('about.meeting')}
               <svg
                 width="14"
                 height="14"
@@ -176,26 +169,26 @@ export default function AboutPage() {
         <div className="about-stats">
           <div className="stat-item">
             <div className="stat-number">
-              11<span>+</span>
+              {t('about.stat1_value')}
             </div>
-            <div className="stat-label">Años de experiencia en marketing</div>
+            <div className="stat-label">{t('about.stat1_label')}</div>
           </div>
           <div className="stat-item">
-            <div className="stat-number">2x</div>
-            <div className="stat-label">Ventas duplicadas para clientes</div>
+            <div className="stat-number">{t('about.stat2_value')}</div>
+            <div className="stat-label">{t('about.stat2_label')}</div>
           </div>
           <div className="stat-item">
             <div className="stat-number">
-              100<span>%</span>
+              {t('about.stat3_value')}
             </div>
-            <div className="stat-label">Proyectos a medida</div>
+            <div className="stat-label">{t('about.stat3_label')}</div>
           </div>
         </div>
 
         {/* Tech Stack */}
         <div className="about-page-tech">
           <div className="about-page-tech-label">
-            Tecnologías y herramientas
+            {t('about.tech_label')}
           </div>
           <div className="about-tech-grid">
             {techStack.map((tech) => (
@@ -211,12 +204,12 @@ export default function AboutPage() {
       {/* ── Por qué elegirme ─────────────────────────────── */}
       <div style={{ marginTop: "5rem" }}>
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <div className="section-label">Por qué elegirme</div>
+          <div className="section-label">{t('about.label')}</div>
           <h2
             className="section-title"
             style={{ maxWidth: 550, margin: "0.5rem auto 0" }}
           >
-            Lo que me diferencia
+            {t('about.differentiators_title')}
           </h2>
         </div>
         <div
@@ -245,7 +238,7 @@ export default function AboutPage() {
 
       {/* ── CTA final ─────────────────────────────────────── */}
       <div className="project-detail-cta" style={{ marginTop: "5rem" }}>
-        <p>¿Tienes un proyecto en mente? Me encantaría escucharte.</p>
+        <p>{t('about.cta_label')}</p>
         <a
           href={CALENDAR_URL}
           className="btn-primary"
@@ -253,7 +246,7 @@ export default function AboutPage() {
           rel="noreferrer"
           style={{ display: "inline-flex" }}
         >
-          Agendar una reunión →
+          {t('about.cta_btn')}
         </a>
       </div>
     </div>

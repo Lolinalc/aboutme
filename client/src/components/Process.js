@@ -1,28 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useReveal } from '../hooks';
-
-const steps = [
-  {
-    num: '01',
-    title: 'Reunión inicial',
-    desc: 'Agendamos una reunión para entender tu negocio, objetivos y retos. Sin compromiso, con claridad.',
-  },
-  {
-    num: '02',
-    title: 'Propuesta de solución',
-    desc: 'Preparo una propuesta clara con etapas, entregables y presupuesto. Todo por escrito, sin sorpresas.',
-  },
-  {
-    num: '03',
-    title: 'Ejecución',
-    desc: 'Implementamos el plan con comunicación constante. Tú revisas y apruebas en cada etapa.',
-  },
-  {
-    num: '04',
-    title: 'Medición y ajustes',
-    desc: 'Analizamos resultados y ajustamos la estrategia para maximizar el retorno de tu inversión.',
-  },
-];
 
 function Step({ step, delay }) {
   const [ref, isVisible] = useReveal();
@@ -36,8 +14,32 @@ function Step({ step, delay }) {
 }
 
 export default function Process() {
+  const { t } = useTranslation();
   const [headerRef, headerVisible] = useReveal();
   const [ctaRef, ctaVisible] = useReveal();
+
+  const steps = [
+    {
+      num: '01',
+      title: t('process.step1_title'),
+      desc: t('process.step1_desc'),
+    },
+    {
+      num: '02',
+      title: t('process.step2_title'),
+      desc: t('process.step2_desc'),
+    },
+    {
+      num: '03',
+      title: t('process.step3_title'),
+      desc: t('process.step3_desc'),
+    },
+    {
+      num: '04',
+      title: t('process.step4_title'),
+      desc: t('process.step4_desc'),
+    },
+  ];
 
   const scrollToContact = () => {
     document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
@@ -47,11 +49,11 @@ export default function Process() {
     <section className="process" id="proceso">
       <div ref={headerRef} className={`section-header reveal${headerVisible ? ' visible' : ''}`}>
         <div>
-          <div className="section-label">Cómo trabajamos</div>
-          <h2 className="section-title">Un proceso claro, sin sorpresas.</h2>
+          <div className="section-label">{t('process.label')}</div>
+          <h2 className="section-title">{t('process.title')}</h2>
         </div>
         <p className="section-desc">
-          Cada proyecto sigue una metodología probada para asegurar resultados predecibles y entregas a tiempo.
+          {t('process.desc')}
         </p>
       </div>
 
@@ -62,9 +64,9 @@ export default function Process() {
       </div>
 
       <div ref={ctaRef} className={`process-cta reveal${ctaVisible ? ' visible' : ''}`}>
-        <p className="process-cta-text">¿Listo para empezar? Da el primer paso hoy.</p>
+        <p className="process-cta-text">{t('process.cta_text')}</p>
         <button className="btn-primary" onClick={scrollToContact}>
-          Quiero empezar
+          {t('process.cta_btn')}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="5" y1="12" x2="19" y2="12" />
             <polyline points="12 5 19 12 12 19" />
